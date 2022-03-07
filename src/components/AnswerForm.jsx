@@ -3,7 +3,7 @@ import CheckBoxes from './CheckBoxes';
 import RadioButtons from './RadioButtons';
 
 export default function AnswerForm() {
-  const [state, setState] = useState({ rating: 0, time: '' });
+  const [state, setState] = useState({ rating: 0, time: '', text: '', name: '', email: '' });
 
   const stateSetter = (key, value) => {
     setState((prevState) => ({
@@ -20,6 +20,17 @@ export default function AnswerForm() {
     stateSetter('time', e.target.value);
   };
 
+  const addText = (e) => {
+    stateSetter('text', e.target.value);
+  };
+
+  const addName = (e) => {
+    stateSetter('name', e.target.value);
+  };
+
+  const addEmail = (e) => {
+    stateSetter('email', e.target.value);
+  };
   console.log(state);
 
   return (
@@ -34,15 +45,16 @@ export default function AnswerForm() {
         <CheckBoxes spendingTime={spendingTime} />
       </div>
       <label>
-        What else have you got to say about your rubber duck?<textarea name="review" cols="30" rows="10"></textarea>
+        What else have you got to say about your rubber duck?
+        <textarea name="review" cols="30" rows="10" onChange={(e) => addText(e)}></textarea>
       </label>
       <label>
         Put your name here (if you feel like it):
-        <input type="text" name="username" value="" />
+        <input type="text" name="username" value={state.name} onChange={(e) => addName(e)} />
       </label>
       <label>
         Leave us your email pretty please??
-        <input type="email" name="email" value="" />
+        <input type="email" name="email" value={state.email} onChange={(e) => addEmail(e)} />
       </label>
       <input class="form__submit" type="submit" value="Submit Survey!" />
     </form>
