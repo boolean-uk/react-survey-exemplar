@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import CheckBoxes from './CheckBoxes';
 import RadioButtons from './RadioButtons';
 
-export default function AnswerForm() {
-  const [state, setState] = useState({ rating: 0, time: '', text: '', name: '', email: '' });
+export default function AnswerForm({ submitForm }) {
+  const [state, setState] = useState({ colour: 0, timeSpent: [], review: '', username: '', email: '' });
 
   const stateSetter = (key, value) => {
     setState((prevState) => ({
@@ -13,28 +13,32 @@ export default function AnswerForm() {
   };
 
   const duckColorRating = (e) => {
-    stateSetter('rating', e.target.value);
+    stateSetter('colour', e.target.value);
   };
 
   const spendingTime = (e) => {
-    stateSetter('time', e.target.value);
+    stateSetter(
+      'timeSpent',
+      !state.timeSpent.includes(e.target.value)
+        ? [...state.timeSpent, e.target.value]
+        : [...state.timeSpent].filter((item) => item !== e.target.value)
+    );
   };
 
   const addText = (e) => {
-    stateSetter('text', e.target.value);
+    stateSetter('review', e.target.value);
   };
 
   const addName = (e) => {
-    stateSetter('name', e.target.value);
+    stateSetter('username', e.target.value);
   };
 
   const addEmail = (e) => {
     stateSetter('email', e.target.value);
   };
-  console.log(state);
 
   return (
-    <form class="form" onSubmit={(e) => submitForm(e)}>
+    <form class="form" onSubmit={(e) => submitForm(e, state)}>
       <h2>Tell us what you think about your rubber duck!</h2>
       <div class="form__group radio">
         <h3>How do you rate your rubber duck colour?</h3>
@@ -50,7 +54,7 @@ export default function AnswerForm() {
       </label>
       <label>
         Put your name here (if you feel like it):
-        <input type="text" name="username" value={state.name} onChange={(e) => addName(e)} />
+        <input type="text" name="username" value={state.username} onChange={(e) => addName(e)} />
       </label>
       <label>
         Leave us your email pretty please??
