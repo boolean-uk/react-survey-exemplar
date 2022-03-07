@@ -10,6 +10,7 @@ function Main() {
     e.preventDefault();
     setOpen(true);
     setAnswersList((preArray) => [...preArray, answers]);
+    e.target.reset();
   };
 
   return (
