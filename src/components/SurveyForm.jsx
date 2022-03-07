@@ -14,6 +14,8 @@ const SurveyForm = ({ addAnswer }) => {
   const onFormSubmit = (event) => {
     event.preventDefault()
     addAnswer(answers)
+    setAnswers(() => defaultAnswers)
+    event.target.reset()
   }
 
   const updateAnswer = (property, value) => {
@@ -24,7 +26,8 @@ const SurveyForm = ({ addAnswer }) => {
     })
   }
 
-  const updateTimeSpent = (value, add) => {
+  const updateTimeSpent = (value) => {
+    const add = !answers.timeSpent.includes(value)
     const updated = add
       ? [...answers.timeSpent, value]
       : [...answers.timeSpent].filter((item) => item !== value)
@@ -95,7 +98,7 @@ const SurveyForm = ({ addAnswer }) => {
                 value='swimming'
                 checked={answers.timeSpent.swimming}
                 onChange={() =>
-                  updateTimeSpent('swimming', !answers.timeSpent.includes('swimming'))
+                  updateTimeSpent('swimming')
                 }
               />
               Swimming
@@ -109,7 +112,7 @@ const SurveyForm = ({ addAnswer }) => {
                 value='bathing'
                 checked={answers.timeSpent.bathing}
                 onChange={() =>
-                  updateTimeSpent('bathing', !answers.timeSpent.includes('bathing'))
+                  updateTimeSpent('bathing')
                 }
               />
               Bathing
@@ -123,7 +126,7 @@ const SurveyForm = ({ addAnswer }) => {
                 value='chatting'
                 checked={answers.timeSpent.chatting}
                 onChange={() =>
-                  updateTimeSpent('chatting', !answers.timeSpent.includes('chatting'))
+                  updateTimeSpent('chatting')
                 }
               />
               Chatting
@@ -137,7 +140,7 @@ const SurveyForm = ({ addAnswer }) => {
                 value='noTime'
                 checked={answers.timeSpent.noTime}
                 onChange={() =>
-                  updateTimeSpent('noTime', !answers.timeSpent.includes('noTime'))
+                  updateTimeSpent('noTime')
                 }
               />
               I don't like to spend time with it
